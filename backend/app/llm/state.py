@@ -1,4 +1,4 @@
-from typing import TypedDict, Optional, Any, List
+from typing import TypedDict, Optional, Any, List, Dict
 
 
 class AgentState(TypedDict):
@@ -8,3 +8,5 @@ class AgentState(TypedDict):
     intent: Optional[str]
     tool_result: Optional[Any]
     response: Optional[str]
+    memory: Dict
+    retrieved_docs: Optional[list]

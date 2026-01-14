@@ -7,4 +7,6 @@ python-jose
 passlib[bcrypt]
 langchain
 langchain-openai
+langchain-community
+faiss-cpu
 
