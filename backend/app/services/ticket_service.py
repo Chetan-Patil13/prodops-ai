@@ -2,6 +2,9 @@ from sqlalchemy import text
 from app.db.connection import engine
 from datetime import datetime
 import uuid
+from app.notifications.notifier import notify_ticket_created
+
+
 
 
 def create_ticket(
@@ -39,8 +42,12 @@ def create_ticket(
                 "line_code": line_code,
             },
         ).mappings().first()
-
+        
+    # after ticket creation
+    notify_ticket_created(result)
     return result
+
+
 
 
 def get_ticket_by_number(ticket_no: str):
