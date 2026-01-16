@@ -4,11 +4,20 @@ from app.llm.graph import build_graph
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
-graph = build_graph()
+_graph = None  # lazy-loaded singleton
+
+
+def get_graph():
+    global _graph
+    if _graph is None:
+        _graph = build_graph()
+    return _graph
 
 
 @router.post("/")
 def chat(message: str, current_user=Depends(get_current_user)):
+    graph = get_graph()
+
     state = {
         "user_id": current_user["user_id"],
         "roles": current_user["roles"],
@@ -19,5 +28,4 @@ def chat(message: str, current_user=Depends(get_current_user)):
     }
 
     final_state = graph.invoke(state)
-
     return {"reply": final_state["response"]}
