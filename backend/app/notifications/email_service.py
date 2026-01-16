@@ -4,8 +4,12 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+
+'''
 env_path = Path(__file__).resolve().parent.parent.parent.parent / ".env.example"
 load_dotenv(env_path)
+'''
+load_dotenv()
 
 def send_email(subject: str, body: str, to_email: str):
     msg = EmailMessage()

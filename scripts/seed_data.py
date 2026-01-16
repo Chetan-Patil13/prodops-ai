@@ -6,10 +6,8 @@ import os
 
 from sqlalchemy import create_engine, text
 from dotenv import load_dotenv
-from pathlib import Path
+load_dotenv()
 
-env_path = Path(__file__).resolve().parent.parent / ".env.example"
-load_dotenv(env_path)
 
 USER = os.getenv("USER")
 PASSWORD = os.getenv("PASSWORD")

@@ -4,9 +4,13 @@ import os
 from dotenv import load_dotenv
 from pathlib import Path
 
+load_dotenv()
+'''
 # Load env file (same logic as seed_data.py)
 env_path = Path(__file__).resolve().parent.parent.parent.parent / ".env.example"
 load_dotenv(env_path)
+'''
+
 
 
 class Settings:

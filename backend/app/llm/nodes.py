@@ -3,10 +3,13 @@ from app.llm.state import AgentState
 from pathlib import Path
 import os
 from dotenv import load_dotenv
- 
+
+'''
 # Load env file (same logic as seed_data.py)
 env_path = Path(__file__).resolve().parent.parent.parent.parent / ".env.example"
 load_dotenv(env_path)
+'''
+load_dotenv()
 
 llm = ChatOpenAI(
     model="gpt-4o-mini",
