@@ -6,9 +6,11 @@ export default function Login({ onLogin }) {
 
   async function handleLogin() {
     try {
-      const res = await apiFetch(`/auth/login?email=${email}`, {
+      const res = await apiFetch("/auth/login", {
         method: "POST",
+        body: JSON.stringify({ email }),
       });
+
       setToken(res.access_token);
       onLogin();
     } catch (err) {
