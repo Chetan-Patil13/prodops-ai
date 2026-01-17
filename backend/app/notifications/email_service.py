@@ -27,7 +27,9 @@ def send_email(subject: str, body: str, to_email: str):
         msg["To"] = to_email
         msg.set_content(body)
 
-        with smtplib.SMTP_SSL(smtp_host, int(smtp_port), timeout=10) as server:
+        # Use SMTP with STARTTLS instead of SMTP_SSL
+        with smtplib.SMTP(smtp_host, int(smtp_port), timeout=10) as server:
+            server.starttls()  # Upgrade to secure connection
             server.login(smtp_user, smtp_password)
             server.send_message(msg)
             logger.info(f"Email sent successfully to {to_email}")
