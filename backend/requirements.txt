@@ -10,4 +10,4 @@ langchain-openai
 langchain-community
 faiss-cpu
 langgraph
-
+twilio

@@ -19,7 +19,7 @@ Created At: {ticket['created_at']}
 
     # Example recipients (later from DB)
     email_recipients = ["chetan.patil1397@gmail.com"]
-    whatsapp_recipients = ["+918855068424"]
+    whatsapp_recipients = ["whatsapp:+918855068424"]
 
     notification_status = "SENT"
     
