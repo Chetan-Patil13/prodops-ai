@@ -1,6 +1,9 @@
 // Automatically use localhost in development, production URL in production
-const API_BASE = "https://production-agent.onrender.com";
+const API_BASE = import.meta.env.DEV 
+  ? "http://localhost:8000" 
+  : "https://production-agent.onrender.com";
 
+  
 export function setToken(token) {
   localStorage.setItem("token", token);
 }

@@ -27,7 +27,7 @@ function ChatMessage({ message, isBot }) {
   );
 }
 
-export default function Chat({ user, onLogout }) {
+export default function Chat({ user, onLogout, onViewTickets }) {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);

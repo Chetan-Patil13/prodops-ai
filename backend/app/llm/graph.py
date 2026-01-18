@@ -7,6 +7,7 @@ from app.llm.nodes import (
     handle_production,
     handle_downtime,
     handle_ticket,
+    handle_ticket_status,
     format_response,
     persist_memory,
     retrieve_knowledge
@@ -15,36 +16,26 @@ from app.llm.nodes import (
 
 def build_graph():
     """
-    Builds the LangGraph workflow for ProdOps AI.
-    This graph supports:
-    - Intent classification
-    - Tool-based execution
-    - Role-based guardrails
-    - Persistent memory across sessions
+    Builds the LangGraph workflow for ProdOps AI with security.
     """
 
     graph = StateGraph(AgentState)
 
-    # -------------------------
     # Nodes
-    # -------------------------
     graph.add_node("load_memory", load_memory)
     graph.add_node("classify_intent", classify_intent)
     graph.add_node("production", handle_production)
     graph.add_node("downtime", handle_downtime)
     graph.add_node("ticket", handle_ticket)
+    graph.add_node("ticket_status", handle_ticket_status)
     graph.add_node("format", format_response)
     graph.add_node("persist_memory", persist_memory)
     graph.add_node("retrieve_knowledge", retrieve_knowledge)
 
-    # -------------------------
     # Entry point
-    # -------------------------
     graph.set_entry_point("load_memory")
 
-    # -------------------------
     # Edges
-    # -------------------------
     graph.add_edge("load_memory", "classify_intent")
 
     graph.add_conditional_edges(
@@ -54,13 +45,17 @@ def build_graph():
             "PRODUCTION_QUERY": "production",
             "DOWNTIME_QUERY": "downtime",
             "CREATE_TICKET": "ticket",
+            "TICKET_STATUS": "ticket_status",
+            "GENERAL_QUERY": "retrieve_knowledge",
             "UNKNOWN": "retrieve_knowledge",
+            "BLOCKED": "format",  # Security blocked requests
         },
     )
     
     graph.add_edge("production", "format")
     graph.add_edge("downtime", "format")
     graph.add_edge("ticket", "format")
+    graph.add_edge("ticket_status", "format")
     graph.add_edge("retrieve_knowledge", "format")
     graph.add_edge("format", "persist_memory")
     graph.add_edge("persist_memory", END)
